@@ -1,0 +1,15 @@
+
+
+.Todo{
+    margin: 100px auto;
+    width: 95%;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
+}
+
+@media (min-width: 520px) {
+    .Todo {
+        width: 500px;
+    }
+}

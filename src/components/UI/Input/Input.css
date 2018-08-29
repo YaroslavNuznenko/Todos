@@ -1,0 +1,19 @@
+.Input, .InputElement{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.InputElement{
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 25px;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #B1C1C0;
+}
+
+
+.InputElement:focus{
+    border-color: rgb(132, 143, 142);    
+}
