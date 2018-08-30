@@ -1,10 +1,13 @@
-.Input, .InputElement{
+.Input{
     display: block;
     width: 100%;
     box-sizing: border-box;
 }
 
-.InputElement{
+.InputBig{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
     padding: 10px;
     border-radius: 5px;
     font-size: 25px;
@@ -13,7 +16,21 @@
     border: 1px solid #B1C1C0;
 }
 
+.InputDefault{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 15px;
+}
 
-.InputElement:focus{
+.InputBig:focus{
     border-color: rgb(132, 143, 142);    
+}
+
+.Invalid {
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: #FDA49A;
 }

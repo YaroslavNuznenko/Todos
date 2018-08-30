@@ -1,0 +1,17 @@
+.Button{
+ 
+}
+.Button + .Button {
+    margin-left: 7.5px;
+}
+.Remove{
+    color: rgb(197, 77, 77);
+}
+
+.Edit{
+    color: rgb(77, 183, 197);
+}
+
+.Save{
+    color: rgb(77, 197, 87);
+}
