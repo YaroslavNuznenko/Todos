@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 
 import Input from "../../components/UI/Input/Input";
 import TaskItems from "../../components/TaskItems/TaskItems";
+import Navigation from "../Navigation/Navigation";
 import classes from "./Todo.css";
 
 class Todo extends Component {
@@ -20,7 +22,7 @@ class Todo extends Component {
             placeholder: "",
             type: "text",
             value: "",
-            name: 'editInput',
+            name: "editInput",
             valid: false,
             validation: {
                 required: true
@@ -51,7 +53,8 @@ class Todo extends Component {
                     .toString(36)
                     .substr(2, 9),
             text: inputValue,
-            editing: false
+            editing: false,
+            isDone: false
         });
         const updatedInput = {
             ...this.state.addTaskInput,
@@ -91,8 +94,6 @@ class Todo extends Component {
 
     editFormHandler = (event, index) => {
         event.preventDefault();
-
-        console.log(event.target);
         const value = event.target.editInput.value;
         const updatedTasks = [...this.state.tasks];
 
@@ -123,7 +124,18 @@ class Todo extends Component {
         this.setState({ tasks: updatedTasks });
     };
 
+    taskDoneHandler = (event, index) => {
+        const updatedTasks = [...this.state.tasks];
+        updatedTasks[index].isDone = event.target.checked;
+
+        this.setState({ tasks: updatedTasks });
+    };
+
     render() {
+        let tasks = this.state.tasks.filter(task=> {
+            return task.isDone;
+        })
+        console.log(tasks, "tasks")
         return (
             <div className={classes.Todo}>
                 <form onSubmit={this.todoHandler}>
@@ -136,15 +148,42 @@ class Todo extends Component {
                         changed={this.inputChangedHandler}
                     />
                 </form>
-                <TaskItems
-                    tasks={this.state.tasks}
-                    taskRemoved={this.taskRemoveHandler}
-                    taskSaved={this.taskSaveHandler}
-                    taskEdited={this.taskEditHandler}
-                    inputConfig={this.state.editInput}
-                    submitEditForm={this.editFormHandler}
-                    changeEditInput={this.editInputHandler}
-                />
+                <Switch>
+                    <Route exact path="/" />
+                    <Route
+                        path="/active"
+                        render={() => (
+                            <TaskItems
+                                tasks={this.state.tasks}
+                                taskRemoved={this.taskRemoveHandler}
+                                taskSaved={this.taskSaveHandler}
+                                taskDone={this.taskDoneHandler}
+                                taskEdited={this.taskEditHandler}
+                                inputConfig={this.state.editInput}
+                                submitEditForm={this.editFormHandler}
+                                changeEditInput={this.editInputHandler}
+                            />
+                        )}
+                    />
+                     <Route
+                        path="/completed"
+                        render={() => (
+                            <TaskItems
+                                tasks={tasks}
+                                taskRemoved={this.taskRemoveHandler}
+                                taskSaved={this.taskSaveHandler}
+                                taskDone={this.taskDoneHandler}
+                                taskEdited={this.taskEditHandler}
+                                inputConfig={this.state.editInput}
+                                submitEditForm={this.editFormHandler}
+                                changeEditInput={this.editInputHandler}
+                            />
+                        )}
+                    />
+                    {/* <Route path='/schedule' component={Schedule}/> */}
+                </Switch>
+
+                <Navigation tasks={this.state.tasks} />
             </div>
         );
     }

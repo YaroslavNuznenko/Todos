@@ -1,0 +1,21 @@
+.NavigationItem+.NavigationItem {
+    margin-left: 10px;
+}
+
+.NavigationItem a {
+    box-sizing: border-box;
+    padding: 2px;
+    color: rgb(104, 104, 110);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.NavigationItem a:active,
+.NavigationItem a.active {
+    border-color: rgba(175, 47, 47, 0.1)
+}
+
+.NavigationItem a:hover {
+    border-color: rgba(175, 47, 47, 0.2);
+}

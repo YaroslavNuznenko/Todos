@@ -1,6 +1,8 @@
 .Button{
- 
+    color: rgb(104, 104, 110);
 }
+
+
 .Button + .Button {
     margin-left: 7.5px;
 }

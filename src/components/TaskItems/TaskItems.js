@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import TaskItem from './TaskItem/TaskItem';
 
 const TaskItems = (props) => {
@@ -9,7 +10,9 @@ const TaskItems = (props) => {
             key={task.id} 
             text={task.text}
             editing={task.editing}
+            isDone={task.isDone}
             removed={()=> {props.taskRemoved(index)}}
+            done={(event)=> {props.taskDone(event, index)}}
             saved={()=> {props.taskSaved(index)}}
             inputConfig={props.inputConfig}
             changeEditInput={(event) => {props.changeEditInput(event, index)}}
@@ -19,6 +22,7 @@ const TaskItems = (props) => {
     return (
         <div>
             {tasks}
+
         </div>
     );
 };
