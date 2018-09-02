@@ -1,6 +1,8 @@
 .Input{
-    display: block;
+    display: flex;
+    align-items: center;
     box-sizing: border-box;
+    
 }
 
 .InputBig{
@@ -17,16 +19,70 @@
 
 .InputDefault{
     display: block;
-    width: 100%;
+    width: 100%;    
     box-sizing: border-box;
-    padding: 5px;
+    padding: 2.5px 5px;
     border-radius: 3px;
-    font-size: 15px;
+    font-size: 14px;
+    border: 1px inset;
 }
 
-.Checkbox{
-    /* width: ; */
+.CheckboxContainer{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 22px;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
 }
+.CheckboxContainer input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.CheckboxContainer input:checked ~ .CheckboxMark{
+    border: 1px solid #cc7878;
+    background: #cc7878;
+} 
+.CheckboxContainer:hover input ~ .checkmark {
+    border-color: #324b98;
+}
+.CheckboxContainer input:checked ~ .CheckboxMark:after{
+    display: block;
+}
+
+.CheckboxMark{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background-color: #fff;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.CheckboxMark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 4px;
+    left: 7px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
 .InputBig:focus{
     border-color: rgb(132, 143, 142);    
 }

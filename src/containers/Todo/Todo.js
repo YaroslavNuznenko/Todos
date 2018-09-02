@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import Input from "../../components/UI/Input/Input";
-import TaskItems from "../../components/TaskItems/TaskItems";
-import Navigation from "../Navigation/Navigation";
+import TaskItems from "../TaskItems/TaskItems";
+import Navigation from "../../components/Navigation/Navigation";
 import classes from "./Todo.css";
 
 class Todo extends Component {
     state = {
-        taskText: "",
         addTaskInput: {
             placeholder: "What needs to be done?",
             type: "text",
@@ -31,6 +31,7 @@ class Todo extends Component {
         tasks: []
     };
 
+
     checkValidity = (value, rules) => {
         let isValid = true;
         if (!rules) {
@@ -43,7 +44,8 @@ class Todo extends Component {
         return isValid;
     };
 
-    todoHandler = event => {
+    //main input
+    newTaskHandler = event => {
         event.preventDefault();
         let inputValue = this.state.addTaskInput.value;
         const updatedTasks = this.state.tasks.concat({
@@ -53,8 +55,7 @@ class Todo extends Component {
                     .toString(36)
                     .substr(2, 9),
             text: inputValue,
-            editing: false,
-            isDone: false
+            isDone: false,
         });
         const updatedInput = {
             ...this.state.addTaskInput,
@@ -62,10 +63,11 @@ class Todo extends Component {
         };
 
         this.setState({ tasks: updatedTasks });
-        this.setState({ taskText: inputValue });
+        // this.setState({ taskText: inputValue });
         this.setState({ addTaskInput: updatedInput });
     };
 
+    //main input
     inputChangedHandler = event => {
         const updatedInput = {
             ...this.state.addTaskInput,
@@ -78,31 +80,17 @@ class Todo extends Component {
         this.setState({ addTaskInput: updatedInput });
     };
 
-    taskEditHandler = index => {
-        const updatedTasks = this.state.tasks;
-        updatedTasks[index].editing = true;
-
-        this.setState({ tasks: updatedTasks });
-    };
-
-    taskSaveHandler = index => {
+    taskSaveHandler = (input) => {
         const updatedTasks = [...this.state.tasks];
-        updatedTasks[index].editing = false;
-
-        this.setState({ tasks: updatedTasks });
-    };
-
-    editFormHandler = (event, index) => {
-        event.preventDefault();
-        const value = event.target.editInput.value;
-        const updatedTasks = [...this.state.tasks];
-
-        updatedTasks[index].text = value;
-        updatedTasks[index].editing = false;
-        this.setState({ tasks: updatedTasks });
+        updatedTasks.forEach(task=>{
+            if(task.id === input.id)
+                task.text = input.value;
+        })
+        this.setState({tasks: updatedTasks})
     };
 
     editInputHandler = (event, index) => {
+        event.preventDefault();
         const updatedInput = {
             ...this.state.editInput,
             valid: this.checkValidity(
@@ -116,29 +104,41 @@ class Todo extends Component {
         updatedTasks[index].text = event.target.value;
         this.setState({ tasks: updatedTasks, editInput: updatedInput });
     };
-
-    taskRemoveHandler = index => {
-        const updatedTasks = [...this.state.tasks];
-        updatedTasks.splice(index, 1);
-
+    
+    taskRemoveHandler = id => {
+        const updatedTasks = this.state.tasks.filter((task)=> task.id!==id);
         this.setState({ tasks: updatedTasks });
     };
 
-    taskDoneHandler = (event, index) => {
+    taskDoneHandler = (event, id) => {
         const updatedTasks = [...this.state.tasks];
-        updatedTasks[index].isDone = event.target.checked;
-
+        updatedTasks.forEach((task)=>{
+            if(task.id === id){
+                task.isDone = event.target.checked;
+            }
+        })
         this.setState({ tasks: updatedTasks });
     };
 
     render() {
-        let tasks = this.state.tasks.filter(task=> {
-            return task.isDone;
-        })
-        console.log(tasks, "tasks")
+
+        let TasksController = (props) => (
+            <TaskItems
+                {...props}
+                tasks={this.state.tasks}
+                taskRemoved={this.taskRemoveHandler}
+                taskSaved={this.taskSaveHandler}
+                taskDone={this.taskDoneHandler}
+                taskEdited={this.taskEditHandler}
+                inputConfig={this.state.editInput}
+                submitEditForm={this.editFormHandler}
+                changeEditInput={this.editInputHandler}
+            />
+        );
+        
         return (
             <div className={classes.Todo}>
-                <form onSubmit={this.todoHandler}>
+                <form onSubmit={this.newTaskHandler}>
                     <Input
                         type={this.state.addTaskInput.type}
                         value={this.state.addTaskInput.value}
@@ -149,44 +149,14 @@ class Todo extends Component {
                     />
                 </form>
                 <Switch>
-                    <Route exact path="/" />
-                    <Route
-                        path="/active"
-                        render={() => (
-                            <TaskItems
-                                tasks={this.state.tasks}
-                                taskRemoved={this.taskRemoveHandler}
-                                taskSaved={this.taskSaveHandler}
-                                taskDone={this.taskDoneHandler}
-                                taskEdited={this.taskEditHandler}
-                                inputConfig={this.state.editInput}
-                                submitEditForm={this.editFormHandler}
-                                changeEditInput={this.editInputHandler}
-                            />
-                        )}
-                    />
-                     <Route
-                        path="/completed"
-                        render={() => (
-                            <TaskItems
-                                tasks={tasks}
-                                taskRemoved={this.taskRemoveHandler}
-                                taskSaved={this.taskSaveHandler}
-                                taskDone={this.taskDoneHandler}
-                                taskEdited={this.taskEditHandler}
-                                inputConfig={this.state.editInput}
-                                submitEditForm={this.editFormHandler}
-                                changeEditInput={this.editInputHandler}
-                            />
-                        )}
-                    />
-                    {/* <Route path='/schedule' component={Schedule}/> */}
+                    <Route exact path="/" component={(props) => TasksController(props)} />
+                    <Route exact path="/active" component={(props) => TasksController(props)} />
+                    <Route exact path="/completed" component={(props) => TasksController(props)} />
                 </Switch>
-
                 <Navigation tasks={this.state.tasks} />
             </div>
         );
     }
 }
 
-export default Todo;
+export default withRouter(Todo);

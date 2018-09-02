@@ -9,13 +9,11 @@
     border: 1px solid transparent;
     border-radius: 2px;
     text-decoration: none;
+    transition: border-color .3s;
 }
 
 .NavigationItem a:active,
-.NavigationItem a.active {
-    border-color: rgba(175, 47, 47, 0.1)
-}
-
+.NavigationItem a.active,
 .NavigationItem a:hover {
     border-color: rgba(175, 47, 47, 0.2);
 }

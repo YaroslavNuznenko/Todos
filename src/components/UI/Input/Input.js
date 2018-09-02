@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Input.css";
 
-const Input = props => {
+const Input = (props) => {
     const inputClasses = [];
     let inputElement;
     switch (props.inputClass) {
@@ -19,37 +19,36 @@ const Input = props => {
     switch (props.type) {
         case "text":
             inputElement = (
-                <input
-                    type={props.type}
-                    value={props.value}
-                    required={props.required}
-                    placeholder={props.placeholder}
-                    className={inputClasses.join(" ")}
-                    onChange={props.changed}
-                    name={props.name}
-                />
+                    <input
+                        type={props.type}
+                        value={props.value}
+                        required={props.required}
+                        placeholder={props.placeholder}
+                        className={inputClasses.join(" ")}
+                        onChange={props.changed}
+                        onKeyDown={props.keydown}
+                        name={props.name}
+                    />
+
             );
             break;
         case "checkbox":
             inputElement = (
+                <label className={classes.CheckboxContainer}>
                 <input
                     type={props.type}
-                    onClick={props.clicked}
+                    onChange={props.changed}
                     name={props.name}
+                    checked={props.checked}
                 />
+                    <span className={classes.CheckboxMark}></span>
+              </label>
+
             );
             break;
     }
 
-    // console.log(props.invalid, 'props.invalid');
-    // if(!props.valid && !props.required){
-    //     inputClasses.push(classes.Invalid)
-    // }
-    return (
-        <div className={classes.Input}>
-            {inputElement}
-        </div>
-    );
-};
+    return <div className={classes.Input}>{inputElement}</div>;
+}
 
 export default Input;

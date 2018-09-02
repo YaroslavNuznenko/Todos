@@ -1,0 +1,31 @@
+.TaskItem{
+    font-size: 15px;
+    color: goldenrod;
+    padding: 7.5px 5px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #4273c8;
+    border-radius: 5px;
+}
+
+.TaskItem p {
+    margin: 0;
+    padding: 0;
+}
+
+.Done{
+    color: #bbbaba;
+
+}
+.Done p{
+    text-decoration: line-through;
+
+}
+
+.TextBlock{
+    display: flex; 
+    width: calc(100% - 55px);
+    word-break: break-all;
+}
