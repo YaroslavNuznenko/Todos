@@ -10,9 +10,9 @@ class TaskItems extends Component {
     componentWillMount() {
         let updatedTasks = this.state.shownTasks.filter(task => {
             switch (this.state.path) {
-                case "/active":
+                case "/Todos/active":
                     return !task.isDone;
-                case "/completed":
+                case "/Todos/completed":
                     return task.isDone;
                 default:
                     return task;

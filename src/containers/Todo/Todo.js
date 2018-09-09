@@ -150,8 +150,8 @@ class Todo extends Component {
                 </form>
                 <Switch>
                     <Route exact path="/Todos" component={(props) => TasksController(props)} />
-                    <Route exact path="/active" component={(props) => TasksController(props)} />
-                    <Route exact path="/completed" component={(props) => TasksController(props)} />
+                    <Route exact path="/Todos/active" component={(props) => TasksController(props)} />
+                    <Route exact path="/Todos/completed" component={(props) => TasksController(props)} />
                 </Switch>
                 <Navigation tasks={this.state.tasks} />
             </div>
