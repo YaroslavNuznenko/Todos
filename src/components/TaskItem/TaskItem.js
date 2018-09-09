@@ -49,7 +49,9 @@ class TaskItem extends Component {
 
     render() {
         let itemClasses = [classes.TaskItem];
-        this.props.isDone ? itemClasses.push(classes.Done) : null;
+        if(this.props.isDone){
+            itemClasses.push(classes.Done)
+        }
 
         return (
             <div className={itemClasses.join(" ")}>
@@ -82,7 +84,7 @@ class TaskItem extends Component {
                     {!this.state.isEdit ? (
                         <Button clicked={this.editToggle} type="Edit" />
                     ) : (
-                        <Button clicked={this.save} type="Save" />
+                        <Button clicked={this.save} type="Save"  />
                     )}
 
                     <Button clicked={this.props.removed} type="Remove" />

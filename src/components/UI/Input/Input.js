@@ -46,6 +46,21 @@ const Input = (props) => {
 
             );
             break;
+            default:
+            inputElement = (
+                    <input
+                        type={props.type}
+                        value={props.value}
+                        required={props.required}
+                        placeholder={props.placeholder}
+                        className={inputClasses.join(" ")}
+                        onChange={props.changed}
+                        onKeyDown={props.keydown}
+                        name={props.name}
+                    />
+
+            );
+            break;
     }
 
     return <div className={classes.Input}>{inputElement}</div>;
